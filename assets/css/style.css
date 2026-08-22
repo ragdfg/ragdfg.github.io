@@ -223,3 +223,36 @@ details.acc .acc-body{padding:0 13px 13px; color:var(--text-dim); font-size:14.5
   .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start}
   .grid-2 .card + .card{margin-top:0}
 }
+
+/* ===== 이미지 크게 보기 ===== */
+.imgs img{cursor:zoom-in}
+.imgs img:active{opacity:.9}
+
+.lightbox{position:fixed; inset:0; z-index:100; background:rgba(6,8,12,.95)}
+.lightbox[hidden]{display:none}
+.lb-stage{
+  position:absolute; inset:0; overflow:auto; -webkit-overflow-scrolling:touch;
+  display:flex; align-items:center; justify-content:center; padding:52px 10px;
+}
+.lb-stage img{
+  max-width:100%; max-height:100%; margin:auto; display:block;
+  border-radius:6px; cursor:zoom-in; user-select:none;
+}
+.lightbox.zoomed .lb-stage{align-items:flex-start; justify-content:flex-start; padding:52px 10px 20px}
+.lightbox.zoomed .lb-stage img{max-width:none; max-height:none; width:auto; cursor:zoom-out; margin:0 auto}
+
+.lb-btn{
+  position:absolute; z-index:2; cursor:pointer; line-height:1;
+  background:rgba(255,255,255,.1); color:#fff; border:1px solid rgba(255,255,255,.18);
+  border-radius:999px; backdrop-filter:blur(6px);
+}
+.lb-btn:active{background:rgba(255,255,255,.22)}
+.lb-btn[hidden]{display:none}
+.lb-close{top:calc(10px + env(safe-area-inset-top)); right:10px; width:40px; height:40px; font-size:17px}
+.lb-prev,.lb-next{top:50%; transform:translateY(-50%); width:42px; height:56px; font-size:26px}
+.lb-prev{left:8px}
+.lb-next{right:8px}
+.lb-count{
+  position:absolute; z-index:2; top:calc(16px + env(safe-area-inset-top)); left:14px;
+  color:rgba(255,255,255,.75); font-size:13px; font-weight:700;
+}

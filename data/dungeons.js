@@ -6,17 +6,18 @@
    ============================================================ */
 window.DUNGEONS = [
   {
-    id: "juno",
+    id: "yuno",
     name: "유노",
     region: "유노",
     location: "12시",
     npc: "시에라",
-    tags: [],
-    summary: "",
-    entry: [],
-    rewards: [],
+    tags: ["유노","생던"],
+    img: ["assets/img/dun/uno/image.png"],
+    summary: "생던 몹, 낙원단으론 조금 힘듬",
+    entry: ["버추얼 레코드 동기화-> 전투모드"],
+    rewards: ["퓨어다이아몬드 1~N개"],
     strategy: [],
-    notes: ""
+    notes: "",    
   },
   {
     id: "lutie",

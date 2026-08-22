@@ -1,0 +1,249 @@
+/* ============================================================
+   인스턴스 던전 데이터
+   - 항목 추가: 아래 배열에 { } 하나 복사해서 붙여넣기
+   - id : 주소(#/dungeon/id)에 쓰이는 값. 영문/숫자/하이픈만.
+   - 비워둔 항목은 화면에 "작성 예정"으로 표시됨.
+   ============================================================ */
+window.DUNGEONS = [
+  {
+    id: "juno",
+    name: "유노",
+    region: "유노",
+    location: "12시",
+    npc: "시에라",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+  {
+    id: "lutie",
+    name: "루티에",
+    region: "루티에",
+    location: "1시",
+    npc: "캐서린 제트존슨",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+
+  {
+    id: "varmundt-sweety",
+    name: "바르문트 (스위티)",
+    region: "바르문트",
+    location: "9시",
+    npc: "스위티",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+  {
+    id: "varmundt-patiya",
+    name: "바르문트 (파티야 고양이)",
+    region: "바르문트",
+    location: "3시",
+    npc: "루비난(?)",
+    tags: ["확인 필요"],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: "NPC 이름 확인 필요."
+  },
+  {
+    id: "varmundt-redpepper",
+    name: "바르문트 (레드페퍼)",
+    region: "바르문트",
+    location: "11시",
+    npc: "숨겨진 NPC",
+    tags: ["숨겨진 NPC"],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: "11시 방향 숨겨진 NPC. 위치 상세 추가 예정."
+  },
+
+  {
+    id: "gh-normal",
+    name: "글래스트헤임 (일고 · 상고)",
+    region: "글래스트헤임",
+    location: "중앙",
+    npc: "흐긴 / 또다른 흐긴",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: "일반 고성 = 흐긴, 상급 고성 = 또다른 흐긴."
+  },
+  {
+    id: "gh-do",
+    name: "글래스트헤임 (도고)",
+    region: "글래스트헤임",
+    location: "중앙에서 9시",
+    npc: "오스카",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+  {
+    id: "gh-eda",
+    name: "글래스트헤임 (에다 · 에다 상급)",
+    region: "글래스트헤임",
+    location: "중앙에서 3시",
+    npc: "오스카",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+
+  {
+    id: "kor-operations",
+    name: "코르 (작전장교)",
+    region: "코르",
+    location: "6시",
+    npc: "작전장교",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+  {
+    id: "kor-rebellion",
+    name: "코르 (리벨리온)",
+    region: "코르",
+    location: "중앙에서 왼쪽 집",
+    npc: "리벨리온",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+
+  {
+    id: "sambo-lab",
+    name: "삼보 (중앙 실험실)",
+    region: "삼보",
+    location: "실험동 - OPTATIO",
+    npc: "문명 탐사원",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+  {
+    id: "geffen-magic",
+    name: "게펜 마법대회",
+    region: "게펜",
+    location: "",
+    npc: "",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: "위치 · NPC 정보 추가 예정."
+  },
+
+  {
+    id: "thanatos",
+    name: "타나토스",
+    region: "타나토스 타워",
+    location: "7층 - 통로 NPC",
+    npc: "통로 NPC",
+    tags: ["보류"],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: "보류."
+  },
+
+  {
+    id: "yungkea",
+    name: "융케아",
+    region: "르간 동굴",
+    location: "12시",
+    npc: "아로롱",
+    tags: [],
+    summary: "",
+    entry: ["르간 동굴은 얼음성에서 바로 이동 가능."],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+  {
+    id: "aquila",
+    name: "아퀼라",
+    region: "르간 동굴",
+    location: "11시",
+    npc: "로프",
+    tags: [],
+    summary: "",
+    entry: ["르간 동굴은 얼음성에서 바로 이동 가능."],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+  {
+    id: "snail",
+    name: "달팽이",
+    region: "얼음의 성",
+    location: "얼음의 성 여관 앞",
+    npc: "꼬뽀",
+    tags: ["입장 퀘스트"],
+    summary: "",
+    entry: ["입장 퀘스트를 먼저 완료해야 함."],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  },
+
+  {
+    id: "rasgand",
+    name: "라스간드",
+    region: "라스간드",
+    location: "",
+    npc: "",
+    tags: ["정보 미정"],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: "위치 · NPC 정보 추가 예정."
+  },
+  {
+    id: "captain",
+    name: "선장",
+    region: "알베르타",
+    location: "어촌 알베르타",
+    npc: "마법사놈",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
+  }
+];

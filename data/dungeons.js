@@ -65,6 +65,7 @@ window.DUNGEONS = [
     region: "바르문트",
     location: "11시",
     npc: "숨겨진 NPC",
+    boss: "암속성 lv3",
     tags: ["숨겨진 NPC"],
     summary: "몬스터 속성 : 암속성",
     entry: [],

@@ -66,7 +66,7 @@ window.DUNGEONS = [
     location: "11시",
     npc: "숨겨진 NPC",
     tags: ["숨겨진 NPC"],
-    summary: "",
+    summary: "몬스터 속성 : 암속성",
     entry: [],
     rewards: [],
     strategy: [],

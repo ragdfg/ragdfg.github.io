@@ -13,7 +13,12 @@ window.CLASSES = [
     skills: [],
     combo: [],
     notes: "",
-    img: []
+    img: [
+      "assets/img/skill/spirit-handler/1.png",
+      "assets/img/skill/spirit-handler/2.png",
+      "assets/img/skill/spirit-handler/3.png",
+      "assets/img/skill/spirit-handler/4.png"
+    ]
   },
   {
     id: "arch-mage",

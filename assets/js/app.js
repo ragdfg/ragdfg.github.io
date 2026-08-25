@@ -1,7 +1,3 @@
-/* ============================================================
-   RO 공략 노트 - 라우터 & 렌더러
-   해시 라우팅(#/dungeon/juno)이라 GitHub Pages에서 별도 설정 없이 동작합니다.
-   ============================================================ */
 (function () {
   "use strict";
 
@@ -15,7 +11,7 @@
 
   var app = document.getElementById("app");
 
-  /* ---------- 유틸 ---------- */
+  /* ---------- 유틸 ---------- */123
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -128,7 +124,7 @@
     });
     return groups.map(function (g) {
       return block(g, '<div class="list">' + map[g].map(function (d) {
-        var meta = [d.location, d.npc].filter(has).join(" · ") || "정보 추가 예정";
+        var meta = [d.location, d.npc, d.boss].filter(has).join(" · ") || "정보 추가 예정";
         return '<a class="row" href="#/dungeon/' + esc(d.id) + '">' +
           '<div class="grow"><div class="name">' + esc(d.name) + badges(d.tags) + "</div>" +
           '<div class="meta">' + esc(meta) + "</div></div>" +
@@ -146,14 +142,15 @@
       "<dt>지역</dt><dd>" + esc(d.region || "-") + "</dd>" +
       "<dt>위치</dt><dd>" + esc(d.location || "확인 필요") + "</dd>" +
       "<dt>입장 NPC</dt><dd>" + esc(d.npc || "확인 필요") + "</dd>" +
+      "<dt>보스 몬스터</dt><dd>" + esc(d.boss || "확인 필요") + "</dd>" +
       "</dl>" + (has(d.tags) ? '<div style="margin-top:8px">' + badges(d.tags) + "</div>" : ""));
 
     html += "<div style='height:14px'></div>";
+    html += block("이미지", card(has(d.img) ? images(d.img) : todo()));
     html += block("간단 요약", card(has(d.summary) ? "<p>" + esc(d.summary) + "</p>" : todo()));
     html += block("진입 방법", card(has(d.entry) ? lines(d.entry) : todo()));
     html += block("보상", card(has(d.rewards) ? lines(d.rewards) : todo()));
     html += block("공략", card(has(d.strategy) ? lines(d.strategy) : todo()));
-    if (has(d.img)) html += block("이미지", images(d.img));
     if (has(d.notes)) html += '<div class="note">' + esc(d.notes) + "</div>";
     return html;
   }
@@ -327,98 +324,6 @@
     topBtn.classList.toggle("show", window.scrollY > 400);
   }, { passive: true });
   topBtn.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
-
-  /* ---------- 이미지 크게 보기 (라이트박스) ---------- */
-  var LB = (function () {
-    var el, stage, imgEl, counter, prevBtn, nextBtn;
-    var list = [], idx = 0, pushed = false, touchX = null;
-
-    function build() {
-      el = document.createElement("div");
-      el.className = "lightbox";
-      el.hidden = true;
-      el.innerHTML =
-        '<div class="lb-stage"><img alt=""></div>' +
-        '<div class="lb-count"></div>' +
-        '<button class="lb-btn lb-close" type="button" aria-label="닫기">✕</button>' +
-        '<button class="lb-btn lb-prev" type="button" aria-label="이전 이미지">‹</button>' +
-        '<button class="lb-btn lb-next" type="button" aria-label="다음 이미지">›</button>';
-      document.body.appendChild(el);
-
-      stage = el.querySelector(".lb-stage");
-      imgEl = el.querySelector(".lb-stage img");
-      counter = el.querySelector(".lb-count");
-      prevBtn = el.querySelector(".lb-prev");
-      nextBtn = el.querySelector(".lb-next");
-
-      el.addEventListener("click", function () { close(false); });
-      el.querySelector(".lb-close").addEventListener("click", function (e) { e.stopPropagation(); close(false); });
-      prevBtn.addEventListener("click", function (e) { e.stopPropagation(); step(-1); });
-      nextBtn.addEventListener("click", function (e) { e.stopPropagation(); step(1); });
-      imgEl.addEventListener("click", function (e) { e.stopPropagation(); toggleZoom(); });
-
-      stage.addEventListener("touchstart", function (e) {
-        touchX = e.touches.length === 1 ? e.touches[0].clientX : null;
-      }, { passive: true });
-      stage.addEventListener("touchend", function (e) {
-        if (touchX === null || el.classList.contains("zoomed")) return;
-        var dx = e.changedTouches[0].clientX - touchX;
-        touchX = null;
-        if (Math.abs(dx) > 55) step(dx < 0 ? 1 : -1);
-      }, { passive: true });
-
-      document.addEventListener("keydown", function (e) {
-        if (el.hidden) return;
-        if (e.key === "Escape") close(false);
-        else if (e.key === "ArrowLeft") step(-1);
-        else if (e.key === "ArrowRight") step(1);
-      });
-      window.addEventListener("popstate", function () { if (!el.hidden) close(true); });
-    }
-
-    function show() {
-      imgEl.src = list[idx];
-      counter.textContent = list.length > 1 ? (idx + 1) + " / " + list.length : "";
-      counter.style.display = list.length > 1 ? "" : "none";
-      prevBtn.hidden = nextBtn.hidden = list.length < 2;
-      el.classList.remove("zoomed");
-      stage.scrollTop = stage.scrollLeft = 0;
-    }
-    function step(d) {
-      if (list.length < 2) return;
-      idx = (idx + d + list.length) % list.length;
-      show();
-    }
-    function toggleZoom() { el.classList.toggle("zoomed"); }
-
-    function open(target) {
-      if (!el) build();
-      var group = target.closest(".imgs");
-      list = group
-        ? Array.prototype.slice.call(group.querySelectorAll("img")).map(function (i) { return i.getAttribute("src"); })
-        : [target.getAttribute("src")];
-      idx = Math.max(0, list.indexOf(target.getAttribute("src")));
-      show();
-      el.hidden = false;
-      document.body.style.overflow = "hidden";
-      if (!pushed) { try { history.pushState({ lb: 1 }, "", location.href); pushed = true; } catch (e) {} }
-    }
-    function close(fromPop) {
-      if (!el || el.hidden) return;
-      el.hidden = true;
-      el.classList.remove("zoomed");
-      imgEl.removeAttribute("src");
-      document.body.style.overflow = "";
-      if (pushed && !fromPop) { pushed = false; history.back(); } else { pushed = false; }
-    }
-
-    return { open: open };
-  })();
-
-  document.addEventListener("click", function (e) {
-    var img = e.target.closest ? e.target.closest(".imgs img") : null;
-    if (img) { e.preventDefault(); LB.open(img); }
-  });
 
   render();
 })();

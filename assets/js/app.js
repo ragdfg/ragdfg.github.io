@@ -196,6 +196,25 @@
     var d = new Date(Date.now() - 4 * 60 * 60 * 1000);
     return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
   }
+  function dayCounter(q) {
+    var cells = "";
+    for (var i = 1; i <= q.days; i++) {
+      cells += '<button class="dc-cell" type="button" data-day="' + i + '">' +
+        "<b>" + i + '</b><i class="dc-date"></i></button>';
+    }
+    return '<div class="daycount" data-quest="' + esc(q.id) + '" data-total="' + q.days + '">' +
+      '<div class="dc-head">' +
+        '<span class="dc-title">일수 체크</span>' +
+        '<span class="dc-progress">0 / ' + q.days + '</span>' +
+        '<button class="dc-reset" type="button">전체 초기화</button>' +
+      "</div>" +
+      '<div class="dc-bar"><i></i></div>' +
+      '<div class="dc-last"></div>' +
+      '<div class="dc-grid">' + cells + "</div>" +
+      '<p class="dc-help">날짜를 누르면 그날 완료로 기록됩니다. 기록한 날짜가 칸에 함께 표시되고 브라우저에 계속 저장됩니다.</p>' +
+      "</div>";
+  }
+
   function pageDaily() {
     var list = window.DAILY || [];
     var html = head("일일 퀘스트", "중요한 것만 · 체크는 새벽 4시 기준 자동 초기화");
@@ -213,8 +232,11 @@
         "<dt>보상</dt><dd>" + esc(q.reward || "확인 필요") + "</dd></dl>";
       body += "<div style='height:8px'></div>";
       body += has(q.steps) ? lines(q.steps) : todo();
+      if (q.days) body += dayCounter(q);
       if (has(q.notes)) body += '<div class="note" style="margin-top:8px">' + esc(q.notes) + "</div>";
-      return '<details class="acc"><summary>' + esc(q.name) + "</summary><div class='acc-body'>" + body + "</div></details>";
+      return '<details class="acc"' + (q.days ? " open" : "") + '><summary>' + esc(q.name) +
+        (q.days ? ' <span class="badge b-accent">' + q.days + "일</span>" : "") +
+        "</summary><div class='acc-body'>" + body + "</div></details>";
     }).join("");
     return html;
   }
@@ -249,6 +271,55 @@
     });
     if (kindHasDaily(root)) save("ro.daily", dailyStore);
   }
+  /* ---------- 일수 체크 (날짜 기록 · 영구 저장) ---------- */
+  function stamp(d) {
+    function p(n) { return (n < 10 ? "0" : "") + n; }
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) +
+      " " + p(d.getHours()) + ":" + p(d.getMinutes());
+  }
+  function bindDays(root) {
+    root.querySelectorAll(".daycount").forEach(function (box) {
+      var qid = box.getAttribute("data-quest");
+      var total = parseInt(box.getAttribute("data-total"), 10) || 0;
+      var bar = box.querySelector(".dc-bar i");
+      var prog = box.querySelector(".dc-progress");
+      var last = box.querySelector(".dc-last");
+      var cells = Array.prototype.slice.call(box.querySelectorAll(".dc-cell"));
+
+      function all() { return store("ro.days", {}); }
+      function mine() { return all()[qid] || {}; }
+
+      function paint() {
+        var s = mine(), n = 0, newest = "";
+        cells.forEach(function (c) {
+          var v = s[c.getAttribute("data-day")];
+          var on = !!v;
+          var when = typeof v === "string" ? v : "";
+          c.classList.toggle("done", on);
+          c.querySelector(".dc-date").textContent = when ? when.slice(5, 10).replace("-", "/") : "";
+          c.title = on ? (when ? when + " 완료" : "완료") : "미완료";
+          if (on) { n++; if (when > newest) newest = when; }
+        });
+        prog.textContent = n + " / " + total;
+        bar.style.width = total ? Math.round((n / total) * 100) + "%" : "0%";
+        last.textContent = newest ? "마지막 기록 : " + newest : "아직 기록 없음";
+      }
+
+      cells.forEach(function (c) {
+        c.addEventListener("click", function () {
+          var data = all(), s = data[qid] || {}, k = c.getAttribute("data-day");
+          if (s[k]) delete s[k]; else s[k] = stamp(new Date());
+          data[qid] = s; save("ro.days", data); paint();
+        });
+      });
+      box.querySelector(".dc-reset").addEventListener("click", function () {
+        if (!window.confirm("일수 체크 " + total + "칸의 기록을 모두 지웁니다. 계속할까요?")) return;
+        var data = all(); delete data[qid]; save("ro.days", data); paint();
+      });
+      paint();
+    });
+  }
+
   function kindHasDaily(root) { return !!root.querySelector('.check[data-store="daily"]'); }
 
   /* ---------- 라우터 ---------- */
@@ -286,6 +357,7 @@
     }
     app.innerHTML = html;
     bindChecks(app);
+    bindDays(app);
 
     var s = document.getElementById("dgSearch");
     if (s) {

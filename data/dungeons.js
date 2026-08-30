@@ -255,5 +255,19 @@ window.DUNGEONS = [
     rewards: [],
     strategy: [],
     notes: ""
+  },
+  {
+    id: "Antirrhinum",
+    name: "금어초",
+    region: "니르홀트",
+    location: "니르홀트의 환영",
+    npc: "요정 npc",
+    boss:"암속성 4Lv",
+    tags: [],
+    summary: "월드이동 \"피오스\" 검색",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
   }
 ];

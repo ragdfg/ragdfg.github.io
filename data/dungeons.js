@@ -269,5 +269,19 @@ window.DUNGEONS = [
     rewards: [],
     strategy: [],
     notes: ""
+  },
+  {
+    id: "DevouredTan",
+    name: "잠식당한 탄",
+    region: "솟아오른 대지 북부",
+    location: "솟아오른 대지 북부 (장식장)",
+    npc: "129, 324 에 있는 오브젝트",
+    boss:"독속성",
+    tags: [],
+    summary: "",
+    entry: [],
+    rewards: [],
+    strategy: [],
+    notes: ""
   }
 ];

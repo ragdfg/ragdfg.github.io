@@ -6,7 +6,8 @@
     { id: "dungeon", label: "인던" },
     { id: "tome",    label: "환상총서" },
     { id: "skill",   label: "스킬&스탯" },
-    { id: "daily",   label: "일퀘" }
+    { id: "daily",   label: "일퀘" },
+    { id: "event",   label: "이벤트" }
   ];
 
   var app = document.getElementById("app");
@@ -241,6 +242,24 @@
     return html;
   }
 
+  /* ---------- 6. 이벤트 ---------- */
+  function pageEvent(sub) {
+    var list = window.EVENTS || [];
+    if (!list.length) return head("이벤트") + '<p class="empty">등록된 이벤트가 없습니다.</p>';
+    var cur = list.filter(function (e) { return e.id === sub; })[0] || list[0];
+
+    var html = head("이벤트", "기간 한정 이벤트 정리");
+    html += subtabs("event", list, cur.id);
+    html += block("개요", card(has(cur.summary) ? "<p>" + esc(cur.summary) + "</p>" : todo()));
+    html += block("진행 방법", card(has(cur.entry) ? lines(cur.entry) : todo()));
+    if (has(cur.quests)) html += block("주요 퀘스트", card(lines(cur.quests)));
+    if (has(cur.choice)) html += block("선택형 퀘스트 (택1)", card(lines(cur.choice)));
+    html += block("보상 · 교환", card(has(cur.rewards) ? lines(cur.rewards) : todo()));
+    if (has(cur.notes)) html += '<div class="note">' + esc(cur.notes) + "</div>";
+    if (has(cur.img)) html += images(cur.img);
+    return html;
+  }
+
   /* ---------- 체크박스 저장 ---------- */
   function bindChecks(root) {
     var prep = store("ro.prep", {});
@@ -353,6 +372,7 @@
       case "tome":    html = pageTome(); break;
       case "skill":   html = pageSkill(r.sub); break;
       case "daily":   html = pageDaily(); break;
+      case "event":   html = pageEvent(r.sub); break;
       default:        html = r.sub ? pageDungeonDetail(r.sub) : pageDungeonList();
     }
     app.innerHTML = html;

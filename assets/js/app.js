@@ -7,7 +7,8 @@
     { id: "tome",    label: "환상총서" },
     { id: "skill",   label: "스킬&스탯" },
     { id: "daily",   label: "일퀘" },
-    { id: "event",   label: "이벤트" }
+    { id: "event",   label: "이벤트" },
+    { id: "element", label: "속성" }
   ];
 
   var app = document.getElementById("app");
@@ -269,6 +270,18 @@
     return html;
   }
 
+  /* ---------- 7. 속성표 ---------- */
+  function pageElement() {
+    var list = window.ELEMENTAL || [];
+    if (!list.length) return head("속성") + '<p class="empty">등록된 속성표가 없습니다.</p>';
+    var html = head("속성", "피해자 속성 레벨별 상성표 (공식 가이드 발췌)");
+    html += list.map(function (lv) {
+      return block(lv.name, card(images(lv.img)), "element:" + lv.id);
+    }).join("");
+    html += '<div class="note">출처: 라그나로크 온라인 공식 시작 가이드 (ro.gnjoy.com/guide/ragstart/basic4.asp)</div>';
+    return html;
+  }
+
   /* ---------- 체크박스 저장 ---------- */
   function bindChecks(root) {
     var prep = store("ro.prep", {});
@@ -382,6 +395,7 @@
       case "skill":   html = pageSkill(r.sub); break;
       case "daily":   html = pageDaily(); break;
       case "event":   html = pageEvent(r.sub); break;
+      case "element": html = pageElement(); break;
       default:        html = r.sub ? pageDungeonDetail(r.sub) : pageDungeonList();
     }
     app.innerHTML = html;

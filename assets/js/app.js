@@ -50,8 +50,17 @@
       return ' <span class="badge ' + cls + '">' + esc(t) + "</span>";
     }).join("");
   }
-  function block(title, html) {
-    return '<div class="section"><div class="section-title">' + esc(title) + "</div>" + html + "</div>";
+  function collapsedMap() { return store("ro.collapsed", {}); }
+  function isCollapsed(key) { return !!collapsedMap()[key]; }
+  function block(title, html, key) {
+    var k = key || title;
+    var collapsed = isCollapsed(k);
+    return '<div class="section' + (collapsed ? " collapsed" : "") + '" data-collapse-key="' + esc(k) + '">' +
+      '<div class="section-title" role="button" tabindex="0">' +
+        '<span class="section-title-text">' + esc(title) + "</span>" +
+        '<span class="section-toggle">' + (collapsed ? "▸" : "▾") + "</span>" +
+      "</div>" +
+      '<div class="section-body">' + html + "</div></div>";
   }
   function card(inner) { return '<div class="card">' + inner + "</div>"; }
 
@@ -94,7 +103,7 @@
           return '<label class="check" data-store="prep" data-key="' + esc(key) + '">' +
             '<input type="checkbox"><span class="t">' + esc(it.t) +
             (it.d ? '<span class="d">' + esc(it.d) + "</span>" : "") + "</span></label>";
-        }).join("") + "</div>");
+        }).join("") + "</div>", "level-prep:" + g.id);
       }).join("");
       html += '<div class="note warn">필요 아이템은 <code>data/leveling.js</code> 의 PREP 에서 수정하세요.</div>';
     }
@@ -130,7 +139,7 @@
           '<div class="grow"><div class="name">' + esc(d.name) + badges(d.tags) + "</div>" +
           '<div class="meta">' + esc(meta) + "</div></div>" +
           '<span class="chev">›</span></a>';
-      }).join("") + "</div>");
+      }).join("") + "</div>", "dungeon-list:" + g);
     }).join("");
   }
   function pageDungeonDetail(id) {
@@ -147,11 +156,11 @@
       "</dl>" + (has(d.tags) ? '<div style="margin-top:8px">' + badges(d.tags) + "</div>" : ""));
 
     html += "<div style='height:14px'></div>";
-    html += block("이미지", card(has(d.img) ? images(d.img) : todo()));
-    html += block("간단 요약", card(has(d.summary) ? "<p>" + esc(d.summary) + "</p>" : todo()));
-    html += block("진입 방법", card(has(d.entry) ? lines(d.entry) : todo()));
-    html += block("보상", card(has(d.rewards) ? lines(d.rewards) : todo()));
-    html += block("공략", card(has(d.strategy) ? lines(d.strategy) : todo()));
+    html += block("이미지", card(has(d.img) ? images(d.img) : todo()), "dungeon:" + d.id + ":img");
+    html += block("간단 요약", card(has(d.summary) ? "<p>" + esc(d.summary) + "</p>" : todo()), "dungeon:" + d.id + ":summary");
+    html += block("진입 방법", card(has(d.entry) ? lines(d.entry) : todo()), "dungeon:" + d.id + ":entry");
+    html += block("보상", card(has(d.rewards) ? lines(d.rewards) : todo()), "dungeon:" + d.id + ":rewards");
+    html += block("공략", card(has(d.strategy) ? lines(d.strategy) : todo()), "dungeon:" + d.id + ":strategy");
     if (has(d.notes)) html += '<div class="note">' + esc(d.notes) + "</div>";
     return html;
   }
@@ -183,9 +192,9 @@
 
     var html = head("스킬 · 스탯", "직업별 정리");
     html += subtabs("skill", list, cur.id);
-    html += block("스탯", card(has(cur.stat) ? lines(cur.stat) : todo()));
-    html += block("스킬", card(has(cur.skills) ? lines(cur.skills) : todo()));
-    html += block("운영 순서", card(has(cur.combo) ? lines(cur.combo) : todo()));
+    html += block("스탯", card(has(cur.stat) ? lines(cur.stat) : todo()), "skill:" + cur.id + ":stat");
+    html += block("스킬", card(has(cur.skills) ? lines(cur.skills) : todo()), "skill:" + cur.id + ":skills");
+    html += block("운영 순서", card(has(cur.combo) ? lines(cur.combo) : todo()), "skill:" + cur.id + ":combo");
     if (has(cur.notes)) html += '<div class="note">' + esc(cur.notes) + "</div>";
     if (has(cur.img)) html += images(cur.img);
     return html;
@@ -250,11 +259,11 @@
 
     var html = head("이벤트", "기간 한정 이벤트 정리");
     html += subtabs("event", list, cur.id);
-    html += block("개요", card(has(cur.summary) ? "<p>" + esc(cur.summary) + "</p>" : todo()));
-    html += block("진행 방법", card(has(cur.entry) ? lines(cur.entry) : todo()));
-    if (has(cur.quests)) html += block("주요 퀘스트", card(lines(cur.quests)));
-    if (has(cur.choice)) html += block("선택형 퀘스트 (택1)", card(lines(cur.choice)));
-    html += block("보상 · 교환", card(has(cur.rewards) ? lines(cur.rewards) : todo()));
+    html += block("개요", card(has(cur.summary) ? "<p>" + esc(cur.summary) + "</p>" : todo()), "event:" + cur.id + ":summary");
+    html += block("진행 방법", card(has(cur.entry) ? lines(cur.entry) : todo()), "event:" + cur.id + ":entry");
+    if (has(cur.quests)) html += block("주요 퀘스트", card(lines(cur.quests)), "event:" + cur.id + ":quests");
+    if (has(cur.choice)) html += block("선택형 퀘스트 (택1)", card(lines(cur.choice)), "event:" + cur.id + ":choice");
+    html += block("보상 · 교환", card(has(cur.rewards) ? lines(cur.rewards) : todo()), "event:" + cur.id + ":rewards");
     if (has(cur.notes)) html += '<div class="note">' + esc(cur.notes) + "</div>";
     if (has(cur.img)) html += images(cur.img);
     return html;
@@ -507,6 +516,30 @@
   document.addEventListener("click", function (e) {
     var img = e.target.closest ? e.target.closest(".imgs img") : null;
     if (img) { e.preventDefault(); LB.open(img); }
+  });
+
+  /* ---------- 섹션 접기 ---------- */
+  function toggleSection(title) {
+    var sec = title.closest(".section");
+    var key = sec && sec.getAttribute("data-collapse-key");
+    if (!key) return;
+    var collapsed = sec.classList.toggle("collapsed");
+    var arrow = title.querySelector(".section-toggle");
+    if (arrow) arrow.textContent = collapsed ? "▸" : "▾";
+    var s = collapsedMap();
+    if (collapsed) s[key] = true; else delete s[key];
+    save("ro.collapsed", s);
+  }
+  document.addEventListener("click", function (e) {
+    var title = e.target.closest ? e.target.closest(".section-title") : null;
+    if (title) toggleSection(title);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var title = e.target.closest ? e.target.closest(".section-title") : null;
+    if (!title) return;
+    e.preventDefault();
+    toggleSection(title);
   });
 
   render();

@@ -109,7 +109,11 @@ p{margin:0}
   font-size:13px; font-weight:800; letter-spacing:.4px; color:var(--text-mute);
   text-transform:uppercase; margin:0 0 8px 2px;
 }
-.section-title::after{content:""; flex:1; height:1px; background:var(--line-soft)}
+.section-title::after{content:""; flex:1; height:1px; background:var(--line-soft); order:1}
+.section[data-collapse-key] > .section-title{cursor:pointer; user-select:none}
+.section-title-text{order:0}
+.section-toggle{order:2; flex:0 0 auto; font-size:12px}
+.section.collapsed .section-body{display:none}
 
 .card{
   background:var(--card); border:1px solid var(--line-soft);

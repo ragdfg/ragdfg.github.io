@@ -8,7 +8,8 @@
     { id: "skill",   label: "스킬&스탯" },
     { id: "daily",   label: "일퀘" },
     { id: "event",   label: "이벤트" },
-    { id: "element", label: "속성" }
+    { id: "element", label: "속성" },
+    { id: "warp",    label: "워프" }
   ];
 
   var app = document.getElementById("app");
@@ -288,6 +289,18 @@
     return html;
   }
 
+  /* ---------- 8. 워프 ---------- */
+  function pageWarp() {
+    var list = window.WARP || [];
+    if (!list.length) return head("워프") + '<p class="empty">등록된 워프 정보가 없습니다.</p>';
+    var html = head("워프", "호기별 이동 가능 지역");
+    html += list.map(function (g) {
+      var body = has(g.items) ? lines(g.items) : todo(g.notes);
+      return block(g.title, card(body), "warp:" + g.id);
+    }).join("");
+    return html;
+  }
+
   /* ---------- 체크박스 저장 ---------- */
   function bindChecks(root) {
     var prep = store("ro.prep", {});
@@ -402,6 +415,7 @@
       case "daily":   html = pageDaily(); break;
       case "event":   html = pageEvent(r.sub); break;
       case "element": html = pageElement(); break;
+      case "warp":    html = pageWarp(); break;
       default:        html = r.sub ? pageDungeonDetail(r.sub) : pageDungeonList();
     }
     app.innerHTML = html;

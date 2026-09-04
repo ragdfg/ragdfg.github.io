@@ -34,7 +34,13 @@
   }
   function lines(arr) {
     if (!has(arr)) return "";
-    return "<ul>" + arr.map(function (l) { return "<li>" + esc(l) + "</li>"; }).join("") + "</ul>";
+    return "<ul>" + arr.map(function (l) {
+      if (/^\/navi\s/.test(l)) {
+        return '<li class="navi-line"><code class="navi-cmd">' + esc(l) + "</code>" +
+          '<button class="copy-btn" type="button" data-copy="' + esc(l) + '" title="클릭하여 복사">복사</button></li>';
+      }
+      return "<li>" + esc(l) + "</li>";
+    }).join("") + "</ul>";
   }
   function images(arr) {
     if (!has(arr)) {
@@ -554,6 +560,44 @@
     if (!title) return;
     e.preventDefault();
     toggleSection(title);
+  });
+
+  /* ---------- 복사 버튼 ---------- */
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        var ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (ok) resolve(); else reject();
+      } catch (e) { reject(e); }
+    });
+  }
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest(".copy-btn") : null;
+    if (!btn) return;
+    var text = btn.getAttribute("data-copy") || "";
+    copyText(text).then(function () {
+      clearTimeout(btn._copyTimer);
+      btn.textContent = "복사됨";
+      btn.classList.add("copied");
+      btn._copyTimer = setTimeout(function () {
+        btn.textContent = "복사";
+        btn.classList.remove("copied");
+      }, 1200);
+    }).catch(function () {
+      clearTimeout(btn._copyTimer);
+      btn.textContent = "실패";
+      btn._copyTimer = setTimeout(function () { btn.textContent = "복사"; }, 1200);
+    });
   });
 
   render();

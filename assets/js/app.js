@@ -237,6 +237,17 @@
       '<p class="dc-help">날짜를 누르면 그날 완료로 기록됩니다. 기록한 날짜가 칸에 함께 표시되고 브라우저에 계속 저장됩니다.</p>' +
       "</div>";
   }
+  function buffList(arr) {
+    if (!has(arr)) return "";
+    return '<div class="buff-list">' + arr.map(function (b) {
+      var eff = has(b.effect) ? esc(b.effect.join(" · ")) : "";
+      return '<div class="buff-item">' +
+        '<div class="buff-head">' + esc(b.name) + "</div>" +
+        '<div class="buff-mat">재료 <strong>' + esc(b.material) + "</strong></div>" +
+        '<div class="buff-effect"><strong>' + esc(b.buff) + "</strong>" + (eff ? " — " + eff : "") + "</div>" +
+        "</div>";
+    }).join("") + "</div>";
+  }
 
   function pageDaily() {
     var list = window.DAILY || [];
@@ -255,6 +266,7 @@
         "<dt>보상</dt><dd>" + esc(q.reward || "확인 필요") + "</dd></dl>";
       body += "<div style='height:8px'></div>";
       body += has(q.steps) ? lines(q.steps) : todo();
+      body += buffList(q.buffs);
       if (q.days) body += dayCounter(q);
       if (has(q.notes)) body += '<div class="note" style="margin-top:8px">' + esc(q.notes) + "</div>";
       return '<details class="acc"' + (q.days ? " open" : "") + '><summary>' + esc(q.name) +

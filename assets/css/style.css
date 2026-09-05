@@ -293,6 +293,18 @@ details.acc .acc-body{padding:0 13px 13px; color:var(--text-dim); font-size:14.5
 .dc-cell.done .dc-date{color:rgba(0,0,0,.6)}
 .dc-help{margin-top:9px; font-size:12px; color:var(--text-mute); line-height:1.5}
 
+/* 버프 목록(만델 등) */
+.buff-list{display:flex; flex-direction:column; gap:6px; margin-top:8px}
+.buff-item{
+  background:var(--card-2); border:1px solid var(--line-soft); border-radius:10px;
+  padding:7px 10px;
+}
+.buff-head{font-size:12px; font-weight:700; color:var(--text-mute); margin-bottom:2px}
+.buff-mat{font-size:13px; color:var(--text-dim)}
+.buff-mat strong{color:var(--accent); font-weight:800}
+.buff-effect{font-size:13.5px; margin-top:2px; color:var(--text-dim); line-height:1.4}
+.buff-effect strong{color:var(--text); font-weight:800}
+
 /* 중첩 목록 (퀘스트 하위 항목 등) */
 ul.sub-list{list-style:none; display:flex; flex-direction:column; gap:6px; margin:6px 0 2px; padding-left:1.05em}
 

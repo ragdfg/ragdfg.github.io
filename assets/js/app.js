@@ -245,6 +245,7 @@
         '<div class="buff-head">' + esc(b.name) + "</div>" +
         '<div class="buff-mat">재료 <strong>' + esc(b.material) + "</strong></div>" +
         '<div class="buff-effect"><strong>' + esc(b.buff) + "</strong>" + (eff ? " — " + eff : "") + "</div>" +
+        (b.days ? dayCounter(b) : "") +
         "</div>";
     }).join("") + "</div>";
   }
@@ -269,8 +270,10 @@
       body += buffList(q.buffs);
       if (q.days) body += dayCounter(q);
       if (has(q.notes)) body += '<div class="note" style="margin-top:8px">' + esc(q.notes) + "</div>";
-      return '<details class="acc"' + (q.days ? " open" : "") + '><summary>' + esc(q.name) +
-        (q.days ? ' <span class="badge b-accent">' + q.days + "일</span>" : "") +
+      var badgeDays = q.days || q.totalDays;
+      var openByDefault = q.days || has(q.buffs);
+      return '<details class="acc"' + (openByDefault ? " open" : "") + '><summary>' + esc(q.name) +
+        (badgeDays ? ' <span class="badge b-accent">' + badgeDays + "일</span>" : "") +
         "</summary><div class='acc-body'>" + body + "</div></details>";
     }).join("");
     return html;

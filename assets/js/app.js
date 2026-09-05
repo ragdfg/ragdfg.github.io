@@ -33,15 +33,20 @@
   function todo(text) {
     return '<p class="empty">' + esc(text || "내용 작성 예정") + "</p>";
   }
+  function lineItem(l) {
+    if (l && typeof l === "object" && !Array.isArray(l)) {
+      var sub = has(l.items) ? '<ul class="sub-list">' + l.items.map(lineItem).join("") + "</ul>" : "";
+      return "<li>" + esc(l.title || "") + sub + "</li>";
+    }
+    if (/^\/navi\s/.test(l)) {
+      return '<li class="navi-line"><code class="navi-cmd">' + esc(l) + "</code>" +
+        '<button class="copy-btn" type="button" data-copy="' + esc(l) + '" title="클릭하여 복사">복사</button></li>';
+    }
+    return "<li>" + esc(l) + "</li>";
+  }
   function lines(arr) {
     if (!has(arr)) return "";
-    return "<ul>" + arr.map(function (l) {
-      if (/^\/navi\s/.test(l)) {
-        return '<li class="navi-line"><code class="navi-cmd">' + esc(l) + "</code>" +
-          '<button class="copy-btn" type="button" data-copy="' + esc(l) + '" title="클릭하여 복사">복사</button></li>';
-      }
-      return "<li>" + esc(l) + "</li>";
-    }).join("") + "</ul>";
+    return "<ul>" + arr.map(lineItem).join("") + "</ul>";
   }
   function images(arr) {
     if (!has(arr)) {

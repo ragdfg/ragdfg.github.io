@@ -293,6 +293,9 @@ details.acc .acc-body{padding:0 13px 13px; color:var(--text-dim); font-size:14.5
 .dc-cell.done .dc-date{color:rgba(0,0,0,.6)}
 .dc-help{margin-top:9px; font-size:12px; color:var(--text-mute); line-height:1.5}
 
+/* 중첩 목록 (퀘스트 하위 항목 등) */
+ul.sub-list{list-style:none; display:flex; flex-direction:column; gap:6px; margin:6px 0 2px; padding-left:1.05em}
+
 /* 명령어 복사 */
 .navi-line{display:flex; align-items:center; justify-content:flex-start; gap:6px; flex-wrap:wrap}
 .navi-cmd{

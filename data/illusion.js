@@ -71,152 +71,285 @@ window.ILLUSIONS = [
     id: "frozen",
     name: "일루전 오브 프로즌",
     level: 120,
-    region: "",
-    npc: "",
-    boss: "",
+    region: "얼음 동굴 (얼음동굴 2층의 균열)",
+    npc: "워프 NPC (ice_dun02 150 11)",
+    boss: "확인 필요",
     prereq: "",
-    summary: "",
-    entry: [],
+    summary: "얼음동굴 2층에 생긴 균열을 조사하는 던전. 보물을 노리는 침입자와 보물을 지키는 사람들, 그리고 사라진 황금 왕궁 이야기가 배경이다. 입장 레벨은 처음 110이었다가 120으로 조정됐다.",
+    entry: [
+      "베이스 레벨 120 이상",
+      "얼음동굴 2층(ice_dun02) 150 11 위치의 워프 NPC로 진입",
+      "/navi ice_dun02 150/11"
+    ],
     quest: [],
     prepare: [],
-    daily: [],
-    rewards: [],
+    daily: [
+      "사냥 + 일일 퀘스트로 환상석 획득 → 일루전 장비 강화에 사용"
+    ],
+    rewards: [
+      "일루전 풍마수리검 난설",
+      "일루전 연겹의 투갑",
+      "재료 아이템 → 일루전 무기 · 방어구 교환 / 강화",
+      "환상석"
+    ],
     strategy: [],
-    links: [],
-    notes: "",
+    links: [
+      { label: "인벤 — 일루전 오브 프로즌(LV120) 정리", url: "https://www.inven.co.kr/board/ro/1951/3903" },
+      { label: "인벤 — 일루전 입장퀘스트 및 진행 (문라이트 · 프리즌 · 뱀파이어)", url: "https://www.inven.co.kr/board/ro/1951/4920" },
+      { label: "공식 — 일루전 오브 프로즌 업데이트", url: "https://ro.gnjoy.com/news/update/View.asp?seq=201" }
+    ],
+    notes: "던전 내 보스와 일일 퀘스트 상세는 직접 확인 필요.",
     img: []
   },
+
   {
     id: "vampire",
     name: "일루전 오브 뱀파이어",
     level: 130,
-    region: "",
-    npc: "",
-    boss: "",
-    prereq: "",
-    summary: "",
-    entry: [],
-    quest: [],
+    region: "게펜 지하 던전 (gef_d01_i)",
+    npc: "그림 (gef_dun01 132 223)",
+    boss: "분노한 드라큘라",
+    prereq: "필요",
+    summary: "게펜 지하 던전을 무대로 한 일루전. 게펜 던전 1층의 \"그림\" 일행과 대화해 메인 퀘스트를 진행하면 던전(gef_d01_i)에 들어갈 수 있다.",
+    entry: [
+      "베이스 레벨 130 이상",
+      "게펜 던전 1층 그림에게 메인 퀘스트를 받고 일행과 상호작용하여 진입",
+      "/navi gef_dun01 132/223"
+    ],
+    quest: [
+      "게펜 던전 1층(gef_dun01 132 223) 그림과 대화 → 메인 퀘스트 시작",
+      "그림 · 모조 · 젬 수녀와 대화하며 메인 퀘스트 진행",
+      "메인 퀘스트 완료 후 일루전 뱀파이어 던전(gef_d01_i) 입장"
+    ],
     prepare: [],
-    daily: [],
-    rewards: [],
-    strategy: [],
-    links: [],
+    daily: [
+      "\"불안한 가짜 피\" 외 총 6종의 일일 퀘스트",
+      "일일 퀘스트 1개당 경험치 50만 + 잡 경험치 50만 + 환상석 1개",
+      "일일 퀘스트 30회 완료 시 \"폭주한 보미\" 소환",
+      "폭주한 보미를 처치하면 보스 \"분노한 드라큘라\" 소환"
+    ],
+    rewards: [
+      "환상석 (메인 · 일일 퀘스트 보상)",
+      "카드 — 안식을 빼앗긴 자 / 스위트 나이트메어 / 매트 드레인리어 / 보미 / 분노한 드라큘라",
+      "악세사리 — 흡혈귀의 하수인 (요구 레벨 100)",
+      "일루전 장비 재료 (등 뒤를 베는 자, 위자드리 스태프 등)"
+    ],
+    strategy: [
+      "등장 몬스터 : 안식을 빼앗긴 자(Lv130 · Lv133), 스위트 나이트메어, 매트 드레인리어, 악몽덩어리",
+      "보스를 보려면 일일 퀘스트 30회 누적이 필요하므로 매일 꾸준히 돌 것"
+    ],
+    links: [
+      { label: "공식 — [던전] 일루전 오브 뱀파이어", url: "https://roz.gnjoy.com/news/update/View.asp?BBSMode=10014&seq=126&curpage=1" },
+      { label: "인벤 — 일루전 입장퀘스트 및 진행 (문라이트 · 프리즌 · 뱀파이어)", url: "https://www.inven.co.kr/board/ro/1951/4920" }
+    ],
     notes: "",
     img: []
   },
+
   {
     id: "guyanggung",
     name: "일루전 오브 구양궁",
     level: 150,
-    region: "",
-    npc: "",
-    boss: "",
+    region: "거북섬 (거북섬 던전 기반)",
+    npc: "에일바르 (알베르타 5시 방향)",
+    boss: "불길한 터틀 제네럴",
     prereq: "",
-    summary: "",
-    entry: [],
-    quest: [],
+    summary: "거북섬을 무대로 한 일루전 던전. 알베르타 5시 방향의 NPC 에일바르에게 말을 걸면 던전으로 이동시켜 준다.",
+    entry: [
+      "베이스 레벨 150 이상",
+      "알베르타 5시 방향 NPC 에일바르와 대화 → 일루전 오브 구양궁으로 이동"
+    ],
+    quest: [
+      "던전 우측의 \"소녀\"와 대화 → 메인 퀘스트 진행",
+      "1층 : 예민한 군인 · 조급한 남자와 대화",
+      "2층 : 고고학자 이에르펜과 대화"
+    ],
     prepare: [],
-    daily: [],
-    rewards: [],
-    strategy: [],
-    links: [],
-    notes: "",
+    daily: [
+      "일일 퀘스트로 환상석 획득 (상세 정리중)"
+    ],
+    rewards: [
+      "메인 퀘스트 완료 시 환상석 5개",
+      "재료 아이템 → 일루전 장비 강화",
+      "카드 아이템"
+    ],
+    strategy: [
+      "등장 몬스터 : 불길한 솔리더 · 불길한 어절터 · 불길한 퍼머터 · 불길한 프리저 · 불길한 힛터 · 불길한 터틀 제네럴"
+    ],
+    links: [
+      { label: "인벤 — 일루전 오브 구양궁(LV150)", url: "https://www.inven.co.kr/board/ro/1951/3978" },
+      { label: "인벤 — [사크라이] 일루전 오브 구양궁", url: "https://www.inven.co.kr/board/ro/1951/3962" },
+      { label: "인벤 뉴스 — 일루전 오브 구양궁 업데이트", url: "https://www.inven.co.kr/webzine/news/?news=175777&site=ro" },
+      { label: "공식 — 일루전 오브 구양궁", url: "https://mro.gnjoy.com/event/detail?seq=748" }
+    ],
+    notes: "업데이트 기사에는 입장 제한이 140으로 적힌 곳도 있음. 실제 입장 시 확인 필요.",
     img: []
   },
+
   {
     id: "teddybear",
     name: "일루전 오브 테디베어",
     level: 150,
-    region: "",
-    npc: "",
-    boss: "",
+    region: "나사리안 제국 (아인베흐 광산 던전과 같은 구조)",
+    npc: "확인 필요",
+    boss: "확인 필요",
     prereq: "필요",
-    summary: "",
-    entry: [],
+    summary: "아인베흐 광산 던전과 같은 구조의 \"나사리안 제국\"이 무대. 간단한 입장 퀘스트를 거쳐야 들어갈 수 있고 150레벨대 몬스터가 등장한다. 체감 난이도는 비프로스트 타워 2층과 비슷하다는 평이 많다.",
+    entry: [
+      "베이스 레벨 150 이상",
+      "간단한 입장(선행) 퀘스트 필요 — 시작 NPC 정리중"
+    ],
     quest: [],
     prepare: [],
     daily: [],
-    rewards: [],
+    rewards: [
+      "재료 아이템 → 일루전 장비 강화",
+      "환상석",
+      "카드 아이템"
+    ],
     strategy: [],
-    links: [],
-    notes: "선행 퀘스트 주소 정리중.",
+    links: [
+      { label: "인벤 — [사크라이] 일루전 오브 테디베어 후기 및 정보", url: "https://www.inven.co.kr/board/ro/1951/4393" },
+      { label: "공식 — 일루전 오브 테디베어 업데이트 안내", url: "https://mro.gnjoy.com/update/detail?seq=219" },
+      { label: "공식 — 일루전 오브 테디베어", url: "https://mro.gnjoy.com/event/detail?seq=804" }
+    ],
+    notes: "선행 퀘스트 시작 NPC와 순서는 아직 정리 못 함.",
     img: []
   },
+
   {
     id: "luanda",
     name: "일루전 오브 루안다",
     level: 160,
-    region: "",
-    npc: "",
-    boss: "",
+    region: "코모도 해변 던전 기반 (beach_dun2)",
+    npc: "워프 NPC (beach_dun2 248 254)",
+    boss: "확인 필요",
     prereq: "",
-    summary: "",
-    entry: [],
+    summary: "코모도 해변 던전을 무대로 한 일루전. beach_dun2 248 254 위치의 NPC가 조건을 만족한 캐릭터를 일루전 루안다로 이동시켜 준다.",
+    entry: [
+      "베이스 레벨 160 이상",
+      "코모도 해변 던전 2(beach_dun2) 248 254 의 NPC와 대화 → 이동",
+      "/navi beach_dun2 248/254"
+    ],
     quest: [],
     prepare: [],
     daily: [],
-    rewards: [],
+    rewards: [
+      "재료 아이템 → 일루전 장비 강화",
+      "환상석",
+      "카드 아이템"
+    ],
     strategy: [],
-    links: [],
-    notes: "",
+    links: [
+      { label: "공식 — 일루전 오브 루안다 업데이트 안내", url: "https://mro.gnjoy.com/update/detail?seq=221" },
+      { label: "공식 — 일루전 오브 루안다", url: "https://mro.gnjoy.com/event/detail?seq=816" },
+      { label: "공식(제로) — [던전] 일루전 오브 루안다", url: "https://roz.gnjoy.com/news/update/View.asp?BBSMode=10014&seq=129&curpage=1" }
+    ],
+    notes: "라그나로크 제로 공식 안내에는 입장 레벨 150으로 적혀 있음. 서버에 따라 다를 수 있으니 확인 필요.",
     img: []
   },
+
   {
     id: "twins",
     name: "일루전 오브 트윈스",
     level: 160,
-    region: "",
-    npc: "",
-    boss: "",
+    region: "모로크 개미지옥 던전 2층",
+    npc: "미르코 (개미지옥 던전 2층)",
+    boss: "확인 필요",
     prereq: "필요",
-    summary: "",
-    entry: [],
-    quest: [],
+    summary: "9번째 일루전 던전. 모로크 개미지옥 던전 2층의 NPC 미르코와 대화하면 진입할 수 있다. 음침하고 어두운 동굴 분위기에 곤충형 몬스터가 가득하다.",
+    entry: [
+      "베이스 레벨 160 이상",
+      "모로크 개미지옥 던전 2층의 NPC 미르코와 대화 → 진입"
+    ],
+    quest: [
+      "미르코와 대화해 메인 퀘스트 진행 (상세 순서 정리중)"
+    ],
     prepare: [],
     daily: [],
-    rewards: [],
-    strategy: [],
-    links: [],
-    notes: "선행 퀘스트 주소 정리중.",
+    rewards: [
+      "재료 아이템 → 기존 장비 12종을 신규 일루전 장비로 강화",
+      "장비 장착용 카드 10종",
+      "환상석"
+    ],
+    strategy: [
+      "곤충형 몬스터 위주 — 곤충형 대응 속성 · 카드 세팅이 유리"
+    ],
+    links: [
+      { label: "인벤 — 일루전 오브 트윈스 업데이트 안내 & 이벤트", url: "https://www.inven.co.kr/board/ro/1952/302215" },
+      { label: "게임메카 — 신규 일루전 던전 트윈스 업데이트", url: "https://www.gamemeca.com/view.php?gid=1656687" }
+    ],
+    notes: "",
     img: []
   },
+
   {
     id: "labyrinth",
     name: "일루전 오브 라비린스",
     level: 170,
-    region: "",
-    npc: "",
-    boss: "",
+    region: "프론테라 북쪽 필드 (prt_fild01) 기반",
+    npc: "왜곡된 균열 (prt_fild01 11시 방향)",
+    boss: "확인 필요",
     prereq: "필요",
-    summary: "",
-    entry: [],
+    summary: "프론테라 북쪽 필드(prt_fild01) 11시 방향의 왜곡된 균열로 진입하는 일루전 던전. 입장 퀘스트를 먼저 완료해야 하고, 강화 NPC도 선행 퀘스트를 끝내야 나타난다.",
+    entry: [
+      "베이스 레벨 170 이상 (자료에 따라 175 이상으로 표기)",
+      "프론테라 북쪽 필드 prt_fild01 11시 방향의 왜곡된 균열로 진입",
+      "입장(선행) 퀘스트 완료 필요"
+    ],
     quest: [],
     prepare: [],
     daily: [],
-    rewards: [],
-    strategy: [],
-    links: [],
-    notes: "선행 퀘스트 주소 정리중.",
+    rewards: [
+      "일반 · 보스 몬스터에게서 환상석, 지역별 제련 박스, 랜덤 옵션 무기 · 방어구 드랍",
+      "일루전 모르페우스 시리즈 등 장비 강화 (일부는 +9 이상 제련 필요)"
+    ],
+    strategy: [
+      "강화 NPC는 선행 퀘스트 완료 전까지 보이지 않음 — 선행부터 처리할 것"
+    ],
+    links: [
+      { label: "인벤 — [사크라이] 일루전 오브 라비린스 후기", url: "https://www.inven.co.kr/board/ro/1951/4608" },
+      { label: "공식 — 일루전 오브 라비린스 업데이트 안내", url: "https://mro.gnjoy.com/update/detail?seq=231" }
+    ],
+    notes: "선행 퀘스트 시작 NPC와 순서는 아직 정리 못 함.",
     img: []
   },
+
   {
     id: "underwater",
     name: "일루전 오브 언더워터",
     level: 180,
-    region: "",
-    npc: "",
-    boss: "",
+    region: "이즈루드 (바다 테마 · 상층 / 하층 2개 층)",
+    npc: "게인 (이즈루드 6시 방향)",
+    boss: "확인 필요",
     prereq: "필요",
-    summary: "",
-    entry: [],
-    quest: [],
+    summary: "8번째 일루전 던전. 이즈루드를 무대로 한 바다 테마 던전으로 상층과 하층 2개 층으로 나뉜다. 상층은 140레벨대, 하층은 180레벨 이상이 사냥하기 적합하다.",
+    entry: [
+      "상층 : 베이스 레벨 140 이상 권장",
+      "하층 : 베이스 레벨 180 이상 권장",
+      "이즈루드 6시 방향 NPC \"게인\"에게 메인 퀘스트 수령 (간단한 대화 퀘스트)"
+    ],
+    quest: [
+      "이즈루드 6시 NPC 게인과 대화 → 메인 퀘스트 시작",
+      "대화 위주의 간단한 퀘스트를 마치면 입장 가능"
+    ],
     prepare: [],
-    daily: [],
-    rewards: [],
-    strategy: [],
-    links: [],
-    notes: "선행 퀘스트 주소 정리중.",
+    daily: [
+      "일일 퀘스트 1개당 환상석 1개"
+    ],
+    rewards: [
+      "재료 아이템 → 기존 장비 13종 강화",
+      "장비 장착용 카드 12종",
+      "환상석"
+    ],
+    strategy: [
+      "물고기 · 수인족 몬스터 위주 — 해당 종족 대응 세팅이 유리"
+    ],
+    links: [
+      { label: "인벤 뉴스 — 이번엔 이즈루드! 일루전 오브 언더워터 등장", url: "https://www.inven.co.kr/webzine/news/?news=233233&site=ro" },
+      { label: "공식 — 일루전 오브 언더워터 업데이트 안내", url: "https://mro.gnjoy.com/update/detail?seq=248" }
+    ],
+    notes: "메모 기준 입장 레벨은 180(하층). 상층은 140레벨대부터 사냥 가능.",
     img: []
   }
 ];

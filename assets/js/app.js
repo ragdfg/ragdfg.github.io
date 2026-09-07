@@ -4,6 +4,7 @@
   var TABS = [
     { id: "level",   label: "육성" },
     { id: "dungeon", label: "인던" },
+    { id: "illusion", label: "일루전" },
     { id: "tome",    label: "환상총서" },
     { id: "skill",   label: "스킬&스탯" },
     { id: "daily",   label: "일퀘" },
@@ -175,6 +176,55 @@
     html += block("보상", card(has(d.rewards) ? lines(d.rewards) : todo()), "dungeon:" + d.id + ":rewards");
     html += block("공략", card(has(d.strategy) ? lines(d.strategy) : todo()), "dungeon:" + d.id + ":strategy");
     if (has(d.notes)) html += '<div class="note">' + esc(d.notes) + "</div>";
+    return html;
+  }
+
+  /* ---------- 2-1. 일루전 던전 ---------- */
+  function linkLines(arr) {
+    return '<ul class="link-list">' + arr.map(function (l) {
+      return '<li><a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + "</a></li>";
+    }).join("") + "</ul>";
+  }
+  function shortName(n) { return String(n).replace(/^\s*일루전\s*오브\s*/, ""); }
+
+  function pageIllusion(sub) {
+    var list = window.ILLUSIONS || [];
+    if (!list.length) return head("일루전 던전") + '<p class="empty">등록된 일루전 던전이 없습니다.</p>';
+    var cur = list.filter(function (x) { return x.id === sub; })[0] || list[0];
+
+    var menu = '<nav class="sidemenu" aria-label="일루전 던전 목록">' + list.map(function (x) {
+      return '<a href="#/illusion/' + esc(x.id) + '" class="' + (x.id === cur.id ? "active" : "") + '">' +
+        '<span class="sm-name">' + esc(shortName(x.name)) + "</span>" +
+        '<span class="sm-meta">' + esc(x.level) +
+        (x.prereq ? '<b class="sm-pre">선행</b>' : "") + "</span></a>";
+    }).join("") + "</nav>";
+
+    var k = "illusion:" + cur.id + ":";
+    var body = '<div class="side-head"><h2>' + esc(cur.name) + "</h2>" +
+      '<div class="sub">입장 레벨 ' + esc(cur.level) +
+      (cur.prereq ? " · 선행 퀘스트 필요" : "") + "</div></div>";
+
+    body += card('<dl class="kv">' +
+      "<dt>입장 레벨</dt><dd>" + esc(cur.level) + "</dd>" +
+      "<dt>지역</dt><dd>" + esc(cur.region || "확인 필요") + "</dd>" +
+      "<dt>입장 NPC</dt><dd>" + esc(cur.npc || "확인 필요") + "</dd>" +
+      "<dt>보스</dt><dd>" + esc(cur.boss || "확인 필요") + "</dd>" +
+      "<dt>선행</dt><dd>" + (cur.prereq ? "선행 퀘스트 필요" : "확인 필요") + "</dd></dl>");
+
+    body += "<div style='height:14px'></div>";
+    body += block("간단 요약", card(has(cur.summary) ? "<p>" + esc(cur.summary) + "</p>" : todo()), k + "summary");
+    body += block("입장 조건", card(has(cur.entry) ? lines(cur.entry) : todo()), k + "entry");
+    body += block("선행 퀘스트 순서", card(has(cur.quest) ? lines(cur.quest) : todo(cur.prereq ? "선행 퀘스트 정리중" : "내용 작성 예정")), k + "quest");
+    body += block("준비물", card(has(cur.prepare) ? lines(cur.prepare) : todo()), k + "prepare");
+    body += block("일일 퀘스트 · 진행", card(has(cur.daily) ? lines(cur.daily) : todo()), k + "daily");
+    body += block("보상", card(has(cur.rewards) ? lines(cur.rewards) : todo()), k + "rewards");
+    body += block("공략", card(has(cur.strategy) ? lines(cur.strategy) : todo()), k + "strategy");
+    body += block("참고 링크", card(has(cur.links) ? linkLines(cur.links) : todo("링크 정리중")), k + "links");
+    if (has(cur.img)) body += block("이미지", card(images(cur.img)), k + "img");
+    if (has(cur.notes)) body += '<div class="note">' + esc(cur.notes) + "</div>";
+
+    var html = head("일루전 던전", "레벨별 " + list.length + "종 · 왼쪽 메뉴에서 선택");
+    html += '<div class="side-layout">' + menu + '<div class="side-content">' + body + "</div></div>";
     return html;
   }
 
@@ -430,6 +480,7 @@
     var html;
     switch (r.tab) {
       case "level":   html = pageLevel(r.sub); break;
+      case "illusion": html = pageIllusion(r.sub); break;
       case "tome":    html = pageTome(); break;
       case "skill":   html = pageSkill(r.sub); break;
       case "daily":   html = pageDaily(); break;

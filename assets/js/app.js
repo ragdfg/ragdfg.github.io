@@ -213,7 +213,7 @@
 
     body += "<div style='height:14px'></div>";
     body += block("간단 요약", card(has(cur.summary) ? "<p>" + esc(cur.summary) + "</p>" : todo()), k + "summary");
-    body += block("입장 조건", card(has(cur.entry) ? lines(cur.entry) : todo()), k + "entry");
+    body += block("입장 위치", card(has(cur.locate) ? lines(cur.locate) : todo()), k + "locate");
     body += block("선행 퀘스트 순서", card(has(cur.quest) ? lines(cur.quest) : todo(cur.prereq ? "선행 퀘스트 정리중" : "내용 작성 예정")), k + "quest");
     body += block("준비물", card(has(cur.prepare) ? lines(cur.prepare) : todo()), k + "prepare");
     body += block("일일 퀘스트 · 진행", card(has(cur.daily) ? lines(cur.daily) : todo()), k + "daily");

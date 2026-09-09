@@ -423,7 +423,7 @@ window.ILLUSIONS = [
   {
     id: "underwater",
     name: "일루전 오브 언더워터",
-    level: 180,
+    level: "140 / 180",
     region: "이즈루드 (바다 테마 · 상층 / 하층 2개 층)",
     npc: "게인 (이즈루드 6시 방향)",
     boss: "확인 필요",
